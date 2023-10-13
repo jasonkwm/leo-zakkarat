@@ -86,13 +86,13 @@ class Deck {
 }
 
 /*** Check whether the deck is propally initialized ***/
-const myDeck = new Deck();
-myDeck.shuffle();
-console.log(myDeck.deckSequnce);
-hash = myDeck.hashState();
-console.log("Sequence State Hash :", hash);
-sequence = myDeck.returnStoredSequence();
-console.log("Sequence: ", sequence);
-salt = myDeck.returnStoredSalt();
-console.log("Salt: ", salt);
-console.log(myDeck.verifyHash(salt, sequence, hash));
+// const myDeck = new Deck();
+// myDeck.shuffle();
+// console.log(myDeck.deckSequnce);
+// hash = myDeck.hashState();
+// console.log("Sequence State Hash :", hash);
+// sequence = myDeck.returnStoredSequence();
+// console.log("Sequence: ", sequence);
+// salt = myDeck.returnStoredSalt();
+// console.log("Salt: ", salt);
+// console.log(myDeck.verifyHash(salt, sequence, hash));
