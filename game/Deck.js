@@ -85,14 +85,23 @@ class Deck {
   }
 }
 
-/*** Check whether the deck is propally initialized ***/
+// /*** Check whether the deck is propally initialized ***/
 // const myDeck = new Deck();
 // myDeck.shuffle();
+// // Check Sequence
 // console.log(myDeck.deckSequnce);
+// // Hash the current state
 // hash = myDeck.hashState();
+// // Print the state hahs
 // console.log("Sequence State Hash :", hash);
+// // Return stored sequence for verification after game
 // sequence = myDeck.returnStoredSequence();
 // console.log("Sequence: ", sequence);
+// // Return stored salt for verification after game
 // salt = myDeck.returnStoredSalt();
+// // Verify the genuinity of the game
 // console.log("Salt: ", salt);
 // console.log(myDeck.verifyHash(salt, sequence, hash));
+// // Convert hex hash to decimals
+// const decimalHash = BigInt(`0x${hash}`).toString(10);
+// console.log(decimalHash);
