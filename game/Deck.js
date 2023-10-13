@@ -37,11 +37,11 @@ class Deck {
   /* Math.ramdom() is pseudoramdom */
   /* Depends of browser, it will use different seed to generate the randomness */
   shuffle() {
-    for (let i = this.sequence.length - 1; i > 0; i--) {
+    for (let i = this.deckSequnce.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [this.sequence[i], this.sequence[j]] = [
-        this.sequence[j],
-        this.sequence[i],
+      [this.deckSequnce[i], this.deckSequnce[j]] = [
+        this.deckSequnce[j],
+        this.deckSequnce[i],
       ];
     }
   }
@@ -61,6 +61,23 @@ class Deck {
       .digest("hex");
   }
 
+  /*** Given salt and sequence, verify the hahs ***/
+  verifyHash(salt, sequence, hash) {
+    return (
+      createHash("sha256")
+        .update(salt + sequence)
+        .digest("hex") == hash
+    );
+  }
+
+  returnStoredSequence() {
+    return this.verifySequence;
+  }
+
+  returnStoredSalt() {
+    return this.verifySalt;
+  }
+
   /* Deal a card from the top of the deck */
   deal() {
     const card = this.sequence.shift();
@@ -70,4 +87,12 @@ class Deck {
 
 /*** Check whether the deck is propally initialized ***/
 const myDeck = new Deck();
+myDeck.shuffle();
 console.log(myDeck.deckSequnce);
+hash = myDeck.hashState();
+console.log("Sequence State Hash :", hash);
+sequence = myDeck.returnStoredSequence();
+console.log("Sequence: ", sequence);
+salt = myDeck.returnStoredSalt();
+console.log("Salt: ", salt);
+console.log(myDeck.verifyHash(salt, sequence, hash));
