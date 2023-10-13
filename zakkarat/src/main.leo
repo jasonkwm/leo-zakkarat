@@ -66,11 +66,24 @@ program zakkarat.aleo {
                 balance: token.balance + (amount * 8u64)
             };
         }
-        return (final_record, game_hash);
-        // return (final_record, game_hash) then finalize(amount, result, hash, salt);
+        return (final_record, game_hash) then finalize(amount, result, hash, salt);
     }
 
-    // finalize store_game (amount: u64, result: u8, hash: field, salt: field) {
-    //     if (result )
-    // }
+    finalize store_game (amount: u64, result: u8, hash: field, salt: field) {
+        let addr: address = aleo1cq3vpv6t6uhd2lnkaxtn79ygm6vled0wjmxeggyktkae59069ugs6cfxjf;
+        let balance: u64 = Mapping::get_or_use(account, addr, 0u64);
+        let contains: bool = Mapping::contains(hashes, hash);
+        assert(!contains);
+        if (result == 0u8) {
+            Mapping::set(account, addr, balance + amount);
+        } else if (result == 1u8) {
+            Mapping::set(account, addr, balance - (amount / 2u64));
+        } else if (result == 2u8) {
+            Mapping::set(account, addr, balance - amount);
+        } else {
+            assert(amount * 8u64 >= balance);
+            Mapping::set(account, addr, balance - (amount * 8u64));
+        }
+        Mapping::set(hashes, hash, salt);
+    }
 }
