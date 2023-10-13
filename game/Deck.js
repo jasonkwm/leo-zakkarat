@@ -80,7 +80,7 @@ class Deck {
 
   /* Deal a card from the top of the deck */
   deal() {
-    const card = this.sequence.shift();
+    const card = this.deckSequnce.shift();
     return card;
   }
 }
