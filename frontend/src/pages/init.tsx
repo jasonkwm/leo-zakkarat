@@ -8,7 +8,7 @@ export function getUuid(result: string): string {
     const regex = /uuid:\s*(\d+u\d+)\.private/;
     let match = result.match(regex);
     if (match) {
-        return match[1];
+        return match[1].replace("u128", "");
     }
     return "";
 }
