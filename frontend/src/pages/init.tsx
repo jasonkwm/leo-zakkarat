@@ -1,6 +1,6 @@
 import React from "react";
 import { initCasino } from "./tools/initCasino";
-import { Box, Button, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Input, Text, Heading } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useMainDataContext } from "@/hooks/MainDataProvider";
 
@@ -54,6 +54,7 @@ export default function Init() {
             margin={"48px auto"}
             gap={"24px"}
         >
+            <Heading>Init Casino Tables</Heading>
             <Text>Input Private Key:</Text>
             <Input
                 onChange={(e) => {
