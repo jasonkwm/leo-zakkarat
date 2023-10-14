@@ -11,3 +11,18 @@ for (let i = 0; i < 6; i++) {
 }
 
 console.log(sixCards);
+
+const cardValues = {
+  A: 1,
+  T: 10,
+  J: 10,
+  Q: 10,
+  K: 10,
+};
+
+const cardPoints = sixCards.map((card) => {
+  const cardFace = card.slice(2);
+  return cardValues[cardFace] || parseInt(cardFace, 10);
+});
+
+console.log(cardPoints);
