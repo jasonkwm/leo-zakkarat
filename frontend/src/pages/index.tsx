@@ -3,7 +3,7 @@ import { Box, Center, Grid, GridItem } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import MainComponent from "@/components/MainComponent";
 import BaccaratTable from "@/components/BaccaratTable";
-
+import TableList from "@/components/TableList";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -35,24 +35,7 @@ export default function Home() {
                         padding={5}
                         color={"brand.zakkarat_black"}
                     >
-                        <Box bg={"papayawhip"} w={"100%"} p={5} borderRadius={"lg"} marginBottom={5}>
-                            Table 1
-                        </Box>
-                        <Box bg={"papayawhip"} w={"100%"} p={5} borderRadius={"lg"} marginBottom={5}>
-                            Table 1
-                        </Box>
-                        <Box bg={"papayawhip"} w={"100%"} p={5} borderRadius={"lg"} marginBottom={5}>
-                            Table 1
-                        </Box>
-                        <Box bg={"papayawhip"} w={"100%"} p={5} borderRadius={"lg"} marginBottom={5}>
-                            Table 1
-                        </Box>
-                        <Box bg={"papayawhip"} w={"100%"} p={5} borderRadius={"lg"} marginBottom={5}>
-                            Table 1
-                        </Box>
-                        <Box bg={"papayawhip"} w={"100%"} p={5} borderRadius={"lg"} marginBottom={5}>
-                            Table 1
-                        </Box>
+                        <TableList />
                     </GridItem>
                     <GridItem
                         rowSpan={3}
@@ -74,8 +57,4 @@ export default function Home() {
             </Box>
         </MainComponent>
     );
-}
-
-function TableList() {
-    return <></>;
 }
