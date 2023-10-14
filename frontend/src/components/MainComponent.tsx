@@ -18,7 +18,7 @@ export default function MainComponent({ children }: { children: React.ReactNode 
                     Home
                 </Link>
                 <Link href="/mint" border={"solid 1px black"} borderRadius={"8px"} padding={"8px 24px"}>
-                    Deposit
+                    Mint
                 </Link>
             </Box>
             <Box mt={"60px"}>{children}</Box>

@@ -1,9 +1,12 @@
 import { Inter } from "next/font/google";
-import { Box, Center, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Center, Grid, GridItem, Input, Textarea, Text } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import MainComponent from "@/components/MainComponent";
 import BaccaratTable from "@/components/BaccaratTable";
 import TableList from "@/components/TableList";
+import { useMainDataContext } from "@/hooks/MainDataProvider";
+import React from "react";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -24,7 +27,12 @@ export default function Home() {
                         border={"3px solid"}
                         borderColor={"brand.zakkarat_white"}
                         borderRadius={"lg"}
-                    ></GridItem>
+                        display={"flex"}
+                        justifyContent={"space-around"}
+                        padding={"8px"}
+                    >
+                        <PlayTheGame />
+                    </GridItem>
                     <GridItem
                         rowSpan={3}
                         colSpan={3}
@@ -56,5 +64,49 @@ export default function Home() {
                 </Grid>
             </Box>
         </MainComponent>
+    );
+}
+
+function PlayTheGame() {
+    const [privateKey, setPrivateKey] = React.useState("");
+    const [amount, setAmount] = React.useState("");
+    const [creditRecord, setCreditRecord] = React.useState("");
+
+    return (
+        <>
+            <Box width={"45%"}>
+                <Text>Private Address: </Text>
+                <Input
+                    required
+                    onChange={(e) => {
+                        setPrivateKey(e.target.value);
+                    }}
+                    value={privateKey}
+                />
+                <Text>Amount: </Text>
+                <Input
+                    type="number"
+                    onChange={(e) => {
+                        let isnum = /^\d+$/.test(e.target.value);
+                        if (e.target.value.length === 0) setAmount("0");
+                        else if (isnum) setAmount(e.target.value);
+                        else setAmount(amount);
+                    }}
+                    value={amount}
+                    width={"100%"}
+                />
+            </Box>
+            <Box width={"45%"}>
+                <Text>Records: </Text>
+                <Textarea
+                    required
+                    onChange={(e: any) => {
+                        setCreditRecord(e.target.value);
+                    }}
+                    value={creditRecord}
+                    height={"75%"}
+                />
+            </Box>
+        </>
     );
 }
