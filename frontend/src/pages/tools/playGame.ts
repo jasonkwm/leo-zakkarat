@@ -6,18 +6,12 @@ import {
   AleoKeyProvider,
 } from "@aleohq/sdk";
 import { zakkarat } from "./zakkarat";
-import { BetOnT } from "@/hooks/MainDataProvider";
 
-export async function makeBet(
-  playerChips: string,
-  playerChoice: BetOnT,
-  playerBetAmount: number,
-  playerPrivateKey: string,
-  uuid: number
-) {
+export async function playGame(casinoDecks: string, bet: string) {
   const myAccount = new Account({
-    privateKey: playerPrivateKey,
+    privateKey: "APrivateKey1zkpBpPcEWWHi2V3t9XMUZcLCHXCQtc3PnkHXmLTzxVffk59",
   });
+
   const networkClient = new AleoNetworkClient("http://vm.aleo.org/api");
   const recordProvider = new NetworkRecordProvider(myAccount, networkClient);
   const keyProvider = new AleoKeyProvider();
@@ -31,18 +25,14 @@ export async function makeBet(
 
   programManager.setAccount(myAccount);
 
-  let choice = 0;
-  if (playerChoice == "banker") choice = 1;
-  else if (playerChoice == "player") choice = 2;
-  else if (playerChoice == "tie") choice = 3;
-
   try {
     const tx_id = await programManager.executeOffline(
       zakkarat,
-      "make_bet",
-      [playerChips, `${choice}u8`, `${playerBetAmount}u64`, `${uuid}u128`],
+      "play_game",
+      [casinoDecks, bet],
       false
     );
+    console.log(tx_id.getOutputs());
     return tx_id.getOutputs();
   } catch (e) {
     console.log(e);
