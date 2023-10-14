@@ -2,7 +2,6 @@
 program zakkarat.aleo {
     mapping account:address  => u64;
     mapping hashes:field  => field;
-
     record Token {
         owner: address,
         balance: u64,
