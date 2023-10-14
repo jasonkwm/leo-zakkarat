@@ -51,6 +51,13 @@ finalize fed_printer:
     set r3 into casino_balance[r0];
 
 
+function player_mint:
+    input r0 as u64.private;
+    assert.neq self.caller aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg;
+    cast self.caller 0u64 r0 into r1 as chips.record;
+    output r1 as chips.record;
+
+
 function initialize_decks:
     input r0 as Hands.private;
     input r1 as Hands.private;

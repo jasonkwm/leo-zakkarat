@@ -2,6 +2,14 @@
 program zakk.aleo {
     mapping casino_balance: address => u64;
 
+    mapping casino_history: u128 => GameResult;
+
+    struct GameResult {
+        banker: Hands,
+        player: Hands,
+        last_two: Hands
+    }
+
     struct Hands {
         first: u16,
         second: u16,
@@ -250,11 +258,18 @@ program zakk.aleo {
             uuid: decks.uuid
         };
 
-        return (chips_for_player, game_result_for_player) then finalize(self.caller, returning_amount);
+        return (chips_for_player, game_result_for_player) 
+            then finalize(self.caller, returning_amount, decks.banker, decks.player, decks.last_two, decks.uuid);
     }
 
-    finalize play_game(public receiver: address, public amount: u64) {
+    finalize play_game(public receiver: address, public amount: u64, public banker: Hands, public player: Hands, public last_two: Hands, public uuid: u128) {
         let current_amount: u64 = Mapping::get_or_use(casino_balance, receiver, 0u64);
         Mapping::set(casino_balance, receiver, current_amount - amount);
+        let gameResult: GameResult = GameResult {
+            banker: banker,
+            player: player,
+            last_two: last_two
+        };
+        Mapping::set(casino_history, uuid, gameResult);
     }
 }  

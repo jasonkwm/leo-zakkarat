@@ -9,6 +9,7 @@ import {
   Flex,
   Grid,
   GridItem,
+  SimpleGrid,
   Spacer,
 } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
@@ -115,7 +116,11 @@ export default function Home() {
             border={"3px solid"}
             borderColor={"brand.zakkarat_white"}
             borderRadius={"lg"}
-          />
+          >
+            <SimpleGrid columns={1}>
+              <Box></Box>
+            </SimpleGrid>
+          </GridItem>
         </Grid>
       </Box>
     </>
