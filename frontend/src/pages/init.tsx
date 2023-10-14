@@ -3,7 +3,7 @@ import { initCasino } from "./tools/initCasino";
 import { Box, Button, Input, Text, Heading } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useMainDataContext } from "@/hooks/MainDataProvider";
-
+import MainComponent from "@/components/MainComponent";
 export function getUuid(result: string): string {
     const regex = /uuid:\s*(\d+u\d+)\.private/;
     let match = result.match(regex);
@@ -46,46 +46,48 @@ export default function Init() {
         setLoading(false);
     }
     return (
-        <Box
-            width={"50%"}
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-            margin={"48px auto"}
-            gap={"24px"}
-        >
-            <Heading>Init Casino Tables</Heading>
-            <Text>Input Private Key:</Text>
-            <Input
-                onChange={(e) => {
-                    setPrivateKey(e.target.value);
-                }}
-                value={privateKey}
-            />
-            <Button
-                isLoading={loading}
-                onClick={async () => {
-                    if (privateKey.length !== 59) {
-                        toast({
-                            title: "Wrong private key length.",
-                            description: "Please try again.",
-                            status: "info",
-                            duration: 9000,
-                            isClosable: true,
-                        });
-                        return;
-                    }
-                    await onSubmit();
-                }}
+        <MainComponent>
+            <Box
+                width={"50%"}
+                display={"flex"}
+                flexDirection={"column"}
+                alignItems={"center"}
+                margin={"48px auto"}
+                gap={"24px"}
             >
-                Submit
-            </Button>
-            <Text>Output: </Text>
-            {tableListFull.map((value, i) => (
-                <Text key={i} p={5}>
-                    {value}
-                </Text>
-            ))}
-        </Box>
+                <Heading>Init Casino Tables</Heading>
+                <Text>Input Private Key:</Text>
+                <Input
+                    onChange={(e) => {
+                        setPrivateKey(e.target.value);
+                    }}
+                    value={privateKey}
+                />
+                <Button
+                    isLoading={loading}
+                    onClick={async () => {
+                        if (privateKey.length !== 59) {
+                            toast({
+                                title: "Wrong private key length.",
+                                description: "Please try again.",
+                                status: "info",
+                                duration: 9000,
+                                isClosable: true,
+                            });
+                            return;
+                        }
+                        await onSubmit();
+                    }}
+                >
+                    Submit
+                </Button>
+                <Text>Output: </Text>
+                {tableListFull.map((value, i) => (
+                    <Text key={i} p={5}>
+                        {value}
+                    </Text>
+                ))}
+            </Box>
+        </MainComponent>
     );
 }

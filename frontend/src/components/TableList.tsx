@@ -19,7 +19,7 @@ export default function TableList() {
                     <Button
                         key={i}
                         width={"100%"}
-                        p={12}
+                        p={6}
                         borderRadius={"lg"}
                         marginBottom={5}
                         bg={"papayawhip"}
