@@ -67,6 +67,7 @@ export default function Home() {
                         <GameSubmit />
                     </GridItem>
                 </Grid>
+                <Text>Mint Record: </Text>
                 <Text>{mintTxn}</Text>
             </Box>
         </MainComponent>

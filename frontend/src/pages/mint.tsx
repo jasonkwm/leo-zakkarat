@@ -20,8 +20,8 @@ export default function Mint() {
 
     async function onSubmit() {
         setLoading(true);
-        const result = (await mint(address)) as string;
-        result.length > 0 ? setLoadingText("Success") : setLoadingText("Failed");
+        const result = (await mint(address))?.toString();
+        if (result) result.length > 0 ? setLoadingText("Success") : setLoadingText("Failed");
         return result;
     }
     return (
@@ -72,7 +72,7 @@ export default function Mint() {
                             return;
                         }
                         let txn = await onSubmit();
-                        if (txn.length > 0) {
+                        if (txn) {
                             setMintTxn(txn);
                         }
                         setLoading(!loading);

@@ -1,4 +1,5 @@
 import { Account, ProgramManager, AleoNetworkClient, NetworkRecordProvider, AleoKeyProvider } from "@aleohq/sdk";
+import { zakkarat } from "./zakkarat";
 
 export async function mint(userPrivateKey: string) {
     const myAccount = new Account({
@@ -19,13 +20,15 @@ export async function mint(userPrivateKey: string) {
     console.log(recordProvider);
     console.log(keyProvider);
 
+    console.log(myAccount);
+    console.log(networkClient);
+    console.log(recordProvider);
+    console.log(keyProvider);
+
     try {
-        const tx_id = await programManager.execute("testdeploy19923.aleo", "mint", 5, false, [
-            myAccount._address.to_string(),
-            "1000u64",
-        ]);
-        console.log(tx_id);
-        return tx_id;
+        const tx_id = await programManager.executeOffline(zakkarat, "player_mint", ["1000u64"], false);
+        console.log(tx_id.getOutputs());
+        return tx_id.getOutputs();
     } catch (e) {
         console.log(e);
         return "";
