@@ -7,8 +7,8 @@ export default function BaccaratTable() {
         <>
             <Button
                 position={"absolute"}
-                top={"19.5%"}
-                left={"43.25%"}
+                top={"20%"}
+                left={"43%"}
                 borderRadius={"50%"}
                 width={"124px"}
                 height={"124px"}
@@ -28,8 +28,8 @@ export default function BaccaratTable() {
             ></Button>
             <Button
                 position={"absolute"}
-                top={"26%"}
-                left={"4.2%"}
+                top={"26.5%"}
+                left={"3.8%"}
                 borderRadius={"50%"}
                 width={"330px"}
                 height={"330px"}
@@ -49,7 +49,7 @@ export default function BaccaratTable() {
             ></Button>
             <Button
                 position={"absolute"}
-                top={"26%"}
+                top={"26.5%"}
                 right={"3.9%"}
                 borderRadius={"50%"}
                 width={"330px"}
