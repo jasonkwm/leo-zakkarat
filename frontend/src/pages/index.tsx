@@ -7,10 +7,10 @@ import TableList from "@/components/TableList";
 import { useMainDataContext } from "@/hooks/MainDataProvider";
 import React from "react";
 import GameInputs from "@/components/GameInputs";
+import GameSubmit from "@/components/GameSubmit";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-    const { playSubmitStatus, setPlaySubmitStatus } = useMainDataContext();
     return (
         <MainComponent>
             <Box h={"100vh"} p={10} bg={"brand.zakkarat_background"} color={"brand.zakkarat_white"}>
@@ -63,13 +63,7 @@ export default function Home() {
                         <BaccaratTable />
                     </GridItem>
                     <GridItem rowSpan={1} colSpan={6}>
-                        <Button
-                            width={"100%"}
-                            paddingY={"24px"}
-                            onSubmit={() => setPlaySubmitStatus(!playSubmitStatus)}
-                        >
-                            Submit
-                        </Button>
+                        <GameSubmit />
                     </GridItem>
                 </Grid>
             </Box>
