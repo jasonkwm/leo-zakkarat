@@ -23,6 +23,8 @@ export type MainDataT = {
     setPlayCreditsRecord: (value: string) => void;
     playSubmitStatus: boolean;
     setPlaySubmitStatus: (value: boolean) => void;
+    mintTxn: string;
+    setMintTxn: (value: string) => void;
 };
 
 export const MainDataContext = React.createContext({} as MainDataT);
@@ -38,6 +40,7 @@ export const MainDataProvider = ({ children }: { children: React.ReactNode }) =>
     const [playAmount, setPlayAmount] = React.useState("");
     const [playCreditsRecord, setPlayCreditsRecord] = React.useState("");
     const [playSubmitStatus, setPlaySubmitStatus] = React.useState(false);
+    const [mintTxn, setMintTxn] = React.useState("");
 
     React.useEffect(() => {
         setTableList(["5", "7", "21", "8", "15", "77", "126", "85"]);
@@ -65,6 +68,8 @@ export const MainDataProvider = ({ children }: { children: React.ReactNode }) =>
                 setPlayCreditsRecord,
                 playSubmitStatus,
                 setPlaySubmitStatus,
+                mintTxn,
+                setMintTxn,
             }}
         >
             {children}

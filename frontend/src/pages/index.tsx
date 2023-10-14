@@ -11,6 +11,7 @@ import GameSubmit from "@/components/GameSubmit";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+    const { mintTxn } = useMainDataContext();
     return (
         <MainComponent>
             <Box h={"100vh"} p={10} bg={"brand.zakkarat_background"} color={"brand.zakkarat_white"}>
@@ -66,6 +67,7 @@ export default function Home() {
                         <GameSubmit />
                     </GridItem>
                 </Grid>
+                <Text>{mintTxn}</Text>
             </Box>
         </MainComponent>
     );
