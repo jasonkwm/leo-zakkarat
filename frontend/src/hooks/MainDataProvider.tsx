@@ -13,6 +13,8 @@ export type MainDataT = {
     setTableList: (value: string[]) => void;
     selectedTable: string;
     setSelectedTable: (value: string) => void;
+    betAmount: string;
+    setBetAmount: (value: string) => void;
 };
 
 export const MainDataContext = React.createContext({} as MainDataT);
@@ -23,9 +25,10 @@ export const MainDataProvider = ({ children }: { children: React.ReactNode }) =>
     const [userChips, setUserChips] = React.useState("");
     const [tableList, setTableList] = React.useState<string[]>([]);
     const [selectedTable, setSelectedTable] = React.useState("");
+    const [betAmount, setBetAmount] = React.useState("");
 
     React.useEffect(() => {
-        setTableList((prev) => [...prev, "5", "7", "21", "8", "15", "77", "126", "85"]);
+        setTableList(["5", "7", "21", "8", "15", "77", "126", "85"]);
     }, []);
     return (
         <MainDataContext.Provider
@@ -40,6 +43,8 @@ export const MainDataProvider = ({ children }: { children: React.ReactNode }) =>
                 setTableList,
                 selectedTable,
                 setSelectedTable,
+                betAmount,
+                setBetAmount,
             }}
         >
             {children}
