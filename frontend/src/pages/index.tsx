@@ -66,6 +66,8 @@ export default function Home() {
                         backgroundRepeat="no-repeat"
                         backgroundSize="cover"
                         position={"relative"}
+                        minWidth={"900px"}
+                        minHeight={"510px"}
                     >
                         <BaccaratTable />
                     </GridItem>
@@ -80,7 +82,7 @@ function BaccaratTable() {
         <>
             <Button
                 position={"absolute"}
-                top={"20%"}
+                top={"19.5%"}
                 left={"43.25%"}
                 borderRadius={"50%"}
                 width={"124px"}
@@ -92,6 +94,9 @@ function BaccaratTable() {
                         transform: "scale(1.1)",
                         backgroundColor: "#FFFFFF1A",
                         border: "solid 1px yellow",
+                    },
+                    "&:active": {
+                        transform: "scale(1.05)",
                     },
                 }}
             ></Button>
@@ -110,6 +115,9 @@ function BaccaratTable() {
                         backgroundColor: "#FFFFFF1A",
                         border: "solid 1px yellow",
                     },
+                    "&:active": {
+                        transform: "scale(1.05)",
+                    },
                 }}
             ></Button>
             <Button
@@ -127,9 +135,11 @@ function BaccaratTable() {
                         backgroundColor: "#FFFFFF1A",
                         border: "solid 1px yellow",
                     },
+                    "&:active": {
+                        transform: "scale(1.05)",
+                    },
                 }}
             ></Button>
-            {/* <Button></Button> */}
         </>
     );
 }
