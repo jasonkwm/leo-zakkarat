@@ -2,16 +2,49 @@ import React from "react";
 import { initCasino } from "./tools/initCasino";
 import { Box, Button, Input, Text } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+import { useMainDataContext } from "@/hooks/MainDataProvider";
+
+function getUuid(result: string): string {
+    const regex = /uuid:\s*(\d+u\d+)\.private/;
+    let match = result.match(regex);
+    if (match) {
+        return match[1];
+    }
+    return "";
+}
 
 export default function Init() {
     const [privateKey, setPrivateKey] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [output, setOutput] = React.useState("");
+    const { tableList, setTableList } = useMainDataContext();
+    const [tableListFull, setTableListFull] = React.useState<string[]>([]);
     const toast = useToast();
+
     async function onSubmit() {
         setLoading(true);
         const result = (await initCasino(privateKey))?.toString();
-        return result;
+        if (result) {
+            setTableListFull((prev) => [...prev, result]);
+            let uuid = getUuid(result);
+            setTableList([...tableList, uuid]);
+            toast({
+                title: "Transaction Successful.",
+                description: "Successfully mint 1000 casino chips.",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: "Transaction Failed.",
+                description: "Please try again.",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
+        }
+        setLoading(false);
     }
     return (
         <Box
@@ -42,28 +75,7 @@ export default function Init() {
                         });
                         return;
                     }
-                    setLoading(!loading);
-                    let txn = await onSubmit();
-                    if (txn) {
-                        setOutput(txn);
-                        toast({
-                            title: "Transaction Successful.",
-                            description: "Successfully mint 1000 casino chips.",
-                            status: "success",
-                            duration: 9000,
-                            isClosable: true,
-                        });
-                    } else {
-                        setOutput("");
-                        toast({
-                            title: "Transaction Failed.",
-                            description: "Please try again.",
-                            status: "success",
-                            duration: 9000,
-                            isClosable: true,
-                        });
-                    }
-                    setLoading(!loading);
+                    await onSubmit();
                 }}
             >
                 Submit
