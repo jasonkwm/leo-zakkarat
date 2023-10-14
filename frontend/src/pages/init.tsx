@@ -4,7 +4,7 @@ import { Box, Button, Input, Text } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useMainDataContext } from "@/hooks/MainDataProvider";
 
-function getUuid(result: string): string {
+export function getUuid(result: string): string {
     const regex = /uuid:\s*(\d+u\d+)\.private/;
     let match = result.match(regex);
     if (match) {
@@ -17,15 +17,14 @@ export default function Init() {
     const [privateKey, setPrivateKey] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [output, setOutput] = React.useState("");
-    const { tableList, setTableList } = useMainDataContext();
-    const [tableListFull, setTableListFull] = React.useState<string[]>([]);
+    const { tableList, setTableList, tableListFull, setTableListFull } = useMainDataContext();
     const toast = useToast();
 
     async function onSubmit() {
         setLoading(true);
         const result = (await initCasino(privateKey))?.toString();
         if (result) {
-            setTableListFull((prev) => [...prev, result]);
+            setTableListFull([...tableListFull, result]);
             let uuid = getUuid(result);
             setTableList([...tableList, uuid]);
             toast({
@@ -81,11 +80,7 @@ export default function Init() {
                 Submit
             </Button>
             <Text>Output: </Text>
-            {tableListFull.map((value, i) => (
-                <Text key={i} p={5}>
-                    {value}
-                </Text>
-            ))}
+            <Text>{output}</Text>
         </Box>
     );
 }
