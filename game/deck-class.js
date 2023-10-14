@@ -59,8 +59,8 @@ class Deck {
       sequence += index.toString().padStart(2, "0");
     }
     let salt = randomBytes(16).toString("hex");
-    this.verifySequence = sequence;
-    this.verifySalt = salt;
+    this.storedProofSequence = sequence;
+    this.storedSalt = salt;
 
     return createHash("md5")
       .update(salt + sequence)
@@ -77,11 +77,11 @@ class Deck {
   }
 
   returnStoredSequence() {
-    return this.verifySequence;
+    return this.storedProofSequence;
   }
 
   returnStoredSalt() {
-    return this.verifySalt;
+    return this.storedSalt;
   }
 
   parseSequenceToCards(sequenceNumber) {
@@ -99,6 +99,41 @@ class Deck {
   deal() {
     const card = this.deckSequence.shift();
     return card;
+  }
+
+  dealSixCards() {
+    const sixCards = [];
+    for (let i = 0; i < 6; i++) {
+      sixCards.push(this.deal());
+    }
+    return sixCards;
+  }
+
+  dealSixCardsParseAsInt() {
+    const cardValues = {
+      A: 1,
+      T: 10,
+      J: 10,
+      Q: 10,
+      K: 10,
+    };
+    const sixCards = this.dealSixCards();
+    const sixCardsParseInt = sixCards.map((card) => {
+      const cardFace = card.slice(2);
+      return cardValues[cardFace] || parseInt(cardFace, 10);
+    });
+    return sixCardsParseInt;
+  }
+
+  dealSixCardsByDeckIndex() {
+    const sixCards = this.dealSixCards();
+    const sixCardsByIndex = [];
+    for (let i = 0; i < sixCards.length; i++) {
+      let card = sixCards[i];
+      let index = this.originalDeck.indexOf(card) + 1;
+      sixCardsByIndex.push(index);
+    }
+    return sixCardsByIndex;
   }
 }
 
