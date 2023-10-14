@@ -1,6 +1,8 @@
 import { Button } from "@chakra-ui/react";
+import { useMainDataContext } from "@/hooks/MainDataProvider";
 
 export default function BaccaratTable() {
+    const { setBetOn } = useMainDataContext();
     return (
         <>
             <Button
@@ -22,6 +24,7 @@ export default function BaccaratTable() {
                         transform: "scale(1.05)",
                     },
                 }}
+                onClick={() => setBetOn("tie")}
             ></Button>
             <Button
                 position={"absolute"}
@@ -42,6 +45,7 @@ export default function BaccaratTable() {
                         transform: "scale(1.05)",
                     },
                 }}
+                onClick={() => setBetOn("player")}
             ></Button>
             <Button
                 position={"absolute"}
@@ -62,6 +66,7 @@ export default function BaccaratTable() {
                         transform: "scale(1.05)",
                     },
                 }}
+                onClick={() => setBetOn("banker")}
             ></Button>
         </>
     );
