@@ -81,7 +81,11 @@ export default function Init() {
                 Submit
             </Button>
             <Text>Output: </Text>
-            <Text>{output}</Text>
+            {tableListFull.map((value, i) => (
+                <Text key={i} p={5}>
+                    {value}
+                </Text>
+            ))}
         </Box>
     );
 }
