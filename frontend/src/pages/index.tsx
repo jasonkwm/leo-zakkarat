@@ -6,10 +6,11 @@ import BaccaratTable from "@/components/BaccaratTable";
 import TableList from "@/components/TableList";
 import { useMainDataContext } from "@/hooks/MainDataProvider";
 import React from "react";
-
+import GameInputs from "@/components/GameInputs";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+    const { playSubmitStatus, setPlaySubmitStatus } = useMainDataContext();
     return (
         <MainComponent>
             <Box h={"100vh"} p={10} bg={"brand.zakkarat_background"} color={"brand.zakkarat_white"}>
@@ -31,7 +32,7 @@ export default function Home() {
                         justifyContent={"space-around"}
                         padding={"8px"}
                     >
-                        <PlayTheGame />
+                        <GameInputs />
                     </GridItem>
                     <GridItem
                         rowSpan={3}
@@ -62,55 +63,16 @@ export default function Home() {
                         <BaccaratTable />
                     </GridItem>
                     <GridItem rowSpan={1} colSpan={6}>
-                        <Button width={"100%"} paddingY={"24px"}>
+                        <Button
+                            width={"100%"}
+                            paddingY={"24px"}
+                            onSubmit={() => setPlaySubmitStatus(!playSubmitStatus)}
+                        >
                             Submit
                         </Button>
                     </GridItem>
                 </Grid>
             </Box>
         </MainComponent>
-    );
-}
-
-function PlayTheGame() {
-    const { playPrivateKey, setPlayPrivateKey, playAmount, setPlayAmount, playCreditsRecord, setPlayCreditsRecord } =
-        useMainDataContext();
-
-    return (
-        <>
-            <Box width={"45%"}>
-                <Text>Private Address: </Text>
-                <Input
-                    required
-                    onChange={(e) => {
-                        setPlayPrivateKey(e.target.value);
-                    }}
-                    value={playPrivateKey}
-                />
-                <Text>Amount: </Text>
-                <Input
-                    type="number"
-                    onChange={(e) => {
-                        let isnum = /^\d+$/.test(e.target.value);
-                        if (e.target.value.length === 0) setPlayAmount("0");
-                        else if (isnum) setPlayAmount(e.target.value);
-                        else setPlayAmount(playAmount);
-                    }}
-                    value={playAmount}
-                    width={"100%"}
-                />
-            </Box>
-            <Box width={"45%"}>
-                <Text>Records: </Text>
-                <Textarea
-                    required
-                    onChange={(e: any) => {
-                        setPlayCreditsRecord(e.target.value);
-                    }}
-                    value={playCreditsRecord}
-                    height={"75%"}
-                />
-            </Box>
-        </>
     );
 }

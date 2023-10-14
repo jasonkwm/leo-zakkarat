@@ -2,7 +2,7 @@ import { useMainDataContext } from "@/hooks/MainDataProvider";
 import { Heading, Button } from "@chakra-ui/react";
 
 export default function TableList() {
-    const { tableList, setSelectedTable } = useMainDataContext();
+    const { tableList, setSelectedTable, selectedTable } = useMainDataContext();
     return (
         <>
             <Heading
@@ -12,7 +12,7 @@ export default function TableList() {
                 borderRadius={"4px"}
                 paddingY={"12px"}
             >
-                Select Your Table Number
+                Select Your Table Number: {selectedTable}
             </Heading>
             {tableList.map((item, i) => {
                 return (
