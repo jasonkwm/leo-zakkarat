@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Box, Center, Container, Flex, Grid, GridItem, Spacer } from "@chakra-ui/react";
+import { Box, Center, Container, Flex, Grid, GridItem, Spacer, Button } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import MainComponent from "@/components/MainComponent";
 const inter = Inter({ subsets: ["latin"] });
@@ -61,9 +61,75 @@ export default function Home() {
                         border={"3px solid"}
                         borderColor={"brand.zakkarat_white"}
                         borderRadius={"lg"}
-                    />
+                        backgroundImage={"/baccarat-table.jpg"}
+                        backgroundPosition="center"
+                        backgroundRepeat="no-repeat"
+                        backgroundSize="cover"
+                        position={"relative"}
+                    >
+                        <BaccaratTable />
+                    </GridItem>
                 </Grid>
             </Box>
         </MainComponent>
+    );
+}
+
+function BaccaratTable() {
+    return (
+        <>
+            <Button
+                position={"absolute"}
+                top={"20%"}
+                left={"43.25%"}
+                borderRadius={"50%"}
+                width={"124px"}
+                height={"124px"}
+                background={"transparent"}
+                border={"solid 1px yellow"}
+                sx={{
+                    "&:hover": {
+                        transform: "scale(1.1)",
+                        backgroundColor: "#FFFFFF1A",
+                        border: "solid 1px yellow",
+                    },
+                }}
+            ></Button>
+            <Button
+                position={"absolute"}
+                top={"26%"}
+                left={"4.2%"}
+                borderRadius={"50%"}
+                width={"330px"}
+                height={"330px"}
+                background={"transparent"}
+                border={"solid 1px yellow"}
+                sx={{
+                    "&:hover": {
+                        transform: "scale(1.1)",
+                        backgroundColor: "#FFFFFF1A",
+                        border: "solid 1px yellow",
+                    },
+                }}
+            ></Button>
+            <Button
+                position={"absolute"}
+                top={"26%"}
+                right={"3.9%"}
+                borderRadius={"50%"}
+                width={"330px"}
+                height={"330px"}
+                background={"transparent"}
+                border={"solid 1px yellow"}
+                sx={{
+                    "&:hover": {
+                        transform: "scale(1.1)",
+                        backgroundColor: "#FFFFFF1A",
+                        border: "solid 1px yellow",
+                    },
+                }}
+            ></Button>
+            {/* <Button></Button> */}
+        </>
     );
 }
