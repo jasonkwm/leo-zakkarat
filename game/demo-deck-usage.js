@@ -28,8 +28,8 @@ console.log(
 );
 console.log("StoredSalt after hashState(): ", gameDeck.storedSalt);
 
-//Ways to deal 6 cards in different formats:
+// Ways to deal 6 cards in different formats:
 
-// console.log("Normal deal: ", gameDeck.dealSixCards());
-// console.log("Deal and parsed as int: ", gameDeck.dealSixCardsParseAsInt());
-// console.log("Deal and parsed as index: ", gameDeck.dealSixCardsByDeckIndex());
+console.log("Normal deal: ", gameDeck.dealSixCards());
+console.log("Deal and parsed as int: ", gameDeck.dealSixCardsParseAsInt());
+console.log("Deal and parsed as index: ", gameDeck.dealSixCardsByDeckIndex()); // Starts with 1 - 52
