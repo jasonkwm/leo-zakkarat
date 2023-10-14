@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import { Box, Center, Grid, GridItem, Input, Textarea, Text } from "@chakra-ui/react";
+import { Box, Center, Grid, GridItem, Input, Textarea, Text, Button } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import MainComponent from "@/components/MainComponent";
 import BaccaratTable from "@/components/BaccaratTable";
@@ -61,6 +61,11 @@ export default function Home() {
                     >
                         <BaccaratTable />
                     </GridItem>
+                    <GridItem rowSpan={1} colSpan={6}>
+                        <Button width={"100%"} paddingY={"24px"}>
+                            Submit
+                        </Button>
+                    </GridItem>
                 </Grid>
             </Box>
         </MainComponent>
@@ -68,9 +73,8 @@ export default function Home() {
 }
 
 function PlayTheGame() {
-    const [privateKey, setPrivateKey] = React.useState("");
-    const [amount, setAmount] = React.useState("");
-    const [creditRecord, setCreditRecord] = React.useState("");
+    const { playPrivateKey, setPlayPrivateKey, playAmount, setPlayAmount, playCreditsRecord, setPlayCreditsRecord } =
+        useMainDataContext();
 
     return (
         <>
@@ -79,20 +83,20 @@ function PlayTheGame() {
                 <Input
                     required
                     onChange={(e) => {
-                        setPrivateKey(e.target.value);
+                        setPlayPrivateKey(e.target.value);
                     }}
-                    value={privateKey}
+                    value={playPrivateKey}
                 />
                 <Text>Amount: </Text>
                 <Input
                     type="number"
                     onChange={(e) => {
                         let isnum = /^\d+$/.test(e.target.value);
-                        if (e.target.value.length === 0) setAmount("0");
-                        else if (isnum) setAmount(e.target.value);
-                        else setAmount(amount);
+                        if (e.target.value.length === 0) setPlayAmount("0");
+                        else if (isnum) setPlayAmount(e.target.value);
+                        else setPlayAmount(playAmount);
                     }}
-                    value={amount}
+                    value={playAmount}
                     width={"100%"}
                 />
             </Box>
@@ -101,9 +105,9 @@ function PlayTheGame() {
                 <Textarea
                     required
                     onChange={(e: any) => {
-                        setCreditRecord(e.target.value);
+                        setPlayCreditsRecord(e.target.value);
                     }}
-                    value={creditRecord}
+                    value={playCreditsRecord}
                     height={"75%"}
                 />
             </Box>
