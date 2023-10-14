@@ -16,7 +16,6 @@ class Deck {
     let suits = ["♠️", "❤️", "♣️", "♦️"];
     let ranks = [
       "A",
-      "1",
       "2",
       "3",
       "4",
@@ -35,6 +34,7 @@ class Deck {
         this.deckSequence.push(suit + rank);
       }
     }
+    this.originalDeck = [...this.deckSequence];
   }
 
   /*** Shuffle deck using Fisher-Yates Algorithm ***/
@@ -53,10 +53,12 @@ class Deck {
   /*** Hash the current sequence with salt and return the hash ***/
   hashState() {
     let sequence = "";
-    for (let card of this.deckSequence) {
-      sequence += card;
+    for (let i = 0; i < 6; i++) {
+      let card = this.deckSequence[i];
+      let index = this.originalDeck.indexOf(card) + 1;
+      sequence += index.toString().padStart(2, "0");
     }
-    let salt = randomBytes(32).toString("hex");
+    let salt = randomBytes(16).toString("hex");
     this.verifySequence = sequence;
     this.verifySalt = salt;
 
@@ -68,7 +70,7 @@ class Deck {
   /*** Given salt and sequence, verify the hahs ***/
   verifyHash(salt, sequence, hash) {
     return (
-      createHash("sha256")
+      createHash("md5")
         .update(salt + sequence)
         .digest("hex") == hash
     );
@@ -82,6 +84,17 @@ class Deck {
     return this.verifySalt;
   }
 
+  parseSequenceToCards(sequenceNumber) {
+    let sequenceString = sequenceNumber.toString();
+
+    let cardSequence = [];
+    for (let i = 0; i < sequenceString.length; i += 2) {
+      let index = parseInt(sequenceString.slice(i, i + 2), 10) - 1;
+      cardSequence.push(this.originalDeck[index]);
+    }
+    return cardSequence;
+  }
+
   /* Deal a card from the top of the deck */
   deal() {
     const card = this.deckSequence.shift();
@@ -91,23 +104,25 @@ class Deck {
 
 module.exports = Deck;
 
-/*** Check whether the deck is propally initialized ***/
-const myDeck = new Deck();
-myDeck.shuffle();
-// Check Sequence
-console.log(myDeck.deckSequence);
-// Hash the current state
-hash = myDeck.hashState();
-// Print the state hahs
-console.log("Sequence State Hash :", hash);
-// Return stored sequence for verification after game
-sequence = myDeck.returnStoredSequence();
-console.log("Sequence: ", sequence);
-// Return stored salt for verification after game
-salt = myDeck.returnStoredSalt();
-// Verify the genuinity of the game
-console.log("Salt: ", salt);
-console.log(myDeck.verifyHash(salt, sequence, hash));
-// Convert hex hash to decimals
-const decimalHash = BigInt(`0x${hash}`).toString(10);
-console.log(decimalHash);
+// /*** Check whether the deck is propally initialized ***/
+// const myDeck = new Deck();
+// myDeck.shuffle();
+// // Check Sequence
+// console.log(myDeck.deckSequence);
+// // Hash the current state
+// hash = myDeck.hashState();
+// // Print the state hahs
+// console.log("Sequence State Hash :", hash);
+// // Return stored sequence for verification after game
+// sequence = myDeck.returnStoredSequence();
+// console.log("Sequence: ", sequence);
+// // Return stored salt for verification after game
+// salt = myDeck.returnStoredSalt();
+// // Verify the genuinity of the game
+// console.log("Salt: ", salt);
+// console.log(myDeck.verifyHash(salt, sequence, hash));
+// // Convert hex hash to decimals
+// const decimalHash = BigInt(`0x${hash}`).toString(10);
+// console.log(decimalHash);
+
+// console.log(myDeck.parseSequenceToCards(sequence));
