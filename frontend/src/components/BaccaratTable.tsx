@@ -1,10 +1,13 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import { useMainDataContext } from "@/hooks/MainDataProvider";
 
 export default function BaccaratTable() {
-    const { setBetOn } = useMainDataContext();
+    const { betOn, setBetOn, selectedTable } = useMainDataContext();
     return (
         <>
+            <Text color={"black"} position={"absolute"} left={"35%"} top={"2.5%"}>
+                Table No: {selectedTable}, Bets On: {betOn}
+            </Text>
             <Button
                 position={"absolute"}
                 top={"20%"}
