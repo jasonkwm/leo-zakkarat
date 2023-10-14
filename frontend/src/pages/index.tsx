@@ -1,7 +1,4 @@
-import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import { Box, Center, Grid, GridItem } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import MainComponent from "@/components/MainComponent";
@@ -77,4 +74,8 @@ export default function Home() {
             </Box>
         </MainComponent>
     );
+}
+
+function TableList() {
+    return <></>;
 }
