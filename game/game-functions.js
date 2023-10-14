@@ -133,7 +133,7 @@ function isNatural(hand) {
   return false;
 }
 
-/*** Determine player's and banker's move ***/
+/*** Determine player's and banker's storedProofSequence ***/
 async function thirdCardLogic(deck, playersHand, bankersHand) {
   if (isNatural(playersHand) || isNatural(bankersHand)) {
     await sleep(1000);

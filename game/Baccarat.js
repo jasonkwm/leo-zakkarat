@@ -74,6 +74,12 @@ async function baccarat() {
 
   await showBettingResult(result, usersChoice, usersCredit, usersBettingAmount);
 
+  console.log(`\nGame Salt: ${gameDeck.storedSalt}\n`);
+  console.log(`\nStored Sequence: ${gameDeck.storedProofSequence}\n`);
+  console.log(
+    gameDeck.verifyHash(gameDeck.storedSalt, gameDeck.storedProofSequence, hash)
+  );
+
   rl.close();
 }
 

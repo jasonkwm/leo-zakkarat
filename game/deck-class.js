@@ -53,7 +53,7 @@ class Deck {
   /*** Hash the current sequence with salt and return the hash ***/
   hashState() {
     let sequence = "";
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 52; i++) {
       let card = this.deckSequence[i];
       let index = this.originalDeck.indexOf(card) + 1;
       sequence += index.toString().padStart(2, "0");
