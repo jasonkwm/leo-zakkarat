@@ -1,0 +1,86 @@
+// The program input for leo/src/main.leo
+// Casino address: aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg
+// Player address: aleo1cd0g8j5ssfklkvzq8d98kd6s7yemjc5lzawpgm7v6mw9qwdrn5yssx84gp
+
+[fed_printer]
+amount: u64 = 10000u64;
+
+// Initialize_decks
+[initialize_decks]
+banker: Hands = Hands {first: 5u16, second: 3u16};
+player: Hands = Hands {first: 3u16, second: 6u16};
+last_two: Hands = Hands {first: 1u16, second: 2u16};
+uuid: u128 =  123u128; 
+
+/* Casino Deck
+{
+  owner: aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg.private,
+  gates: 0u64.private,
+  banker: {
+    first: 5u16.private,
+    second: 3u16.private
+  },
+  player: {
+    first: 3u16.private,
+    second: 6u16.private
+  },
+  last_two: {
+    first: 1u16.private,
+    second: 2u16.private
+  },
+  uuid: 123u128.private,
+  _nonce: 3953978686933598624787017572450516482803228043432815334662899291739585558107group.public
+}
+*/
+
+[make_bet]
+player_balance: chips = chips {
+    owner: aleo1cd0g8j5ssfklkvzq8d98kd6s7yemjc5lzawpgm7v6mw9qwdrn5yssx84gp,
+    gates: 0u64,
+    amount: 1000u64,
+    _nonce: 0group
+};
+choice: u8 = 1u8;
+amount: u64 = 500u64;
+uuid: u128 = 123u128;
+
+/*
+new_player_chips
+{
+  owner: aleo1cd0g8j5ssfklkvzq8d98kd6s7yemjc5lzawpgm7v6mw9qwdrn5yssx84gp.private,
+  gates: 0u64.private,
+  amount: 500u64.private,
+  _nonce: 7787958837161420363131048879478985264121948892658198764069897334364932076448group.public
+}
+new_bet
+{
+  owner: aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg.private,
+  player: aleo1cd0g8j5ssfklkvzq8d98kd6s7yemjc5lzawpgm7v6mw9qwdrn5yssx84gp.private,
+  gates: 0u64.private,
+  choice: 1u8.private,
+  uuid: 123u128.private,
+  amount: 500u64.private,
+  _nonce: 6342221431404094973392882093742621317428792304232263153919016833962699737646group.public
+}
+*/
+
+[play_game]
+decks: CasinoDecks = CasinoDecks {
+    owner: aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg,
+    gates: 0u64,
+    banker: Hands { first: 5u16, second: 3u16 },
+    player: Hands { first: 3u16, second: 6u16 },
+    last_two: Hands { first: 1u16, second: 2u16 },
+    uuid: 123u128,
+    _nonce: 0group
+};
+player_bet: bet = bet {
+    owner: aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg,
+    player: aleo1cd0g8j5ssfklkvzq8d98kd6s7yemjc5lzawpgm7v6mw9qwdrn5yssx84gp,
+    gates: 0u64,
+    choice: 1u8,
+    uuid: 123u128,
+    amount: 500u64,
+    _nonce: 0group
+};
+
