@@ -1,12 +1,26 @@
 import React from "react";
 import { Box, Button, Heading, Input, Text } from "@chakra-ui/react";
 import MainComponent from "@/components/MainComponent";
+import { mint } from "./tools/mint";
+
+async function test () {
+    return "yes";
+}
 
 export default function Mint() {
     const [amount, setAmount] = React.useState("");
     const [success, setSuccess] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [address, setAddress] = React.useState("");
+    const [loadingText, setLoadingText] = React.useState("Submit");
+
+    async function onSubmit() {
+        setLoading(true);
+        const result = await mint(address);
+        result ? setLoadingText("Success") : setLoadingText("Failed");
+        setLoading(false);
+    }
+
     return (
         <MainComponent>
             <Box
@@ -17,9 +31,9 @@ export default function Mint() {
                 alignItems={"center"}
                 gap={"24px"}
             >
-                <Heading>Mint Chips</Heading>
+                <Heading>Mint 1000 Chips</Heading>
                 <Box width={"100%"}>
-                    <Text>Public Address: </Text>
+                    <Text>Private Key: </Text>
                     <Input
                         required
                         onChange={(e) => {
@@ -27,7 +41,7 @@ export default function Mint() {
                         }}
                         value={address}
                     />
-                    <Text>Amount: </Text>
+                    {/* <Text>Amount: </Text>
                     <Input
                         type="number"
                         onChange={(e) => {
@@ -38,16 +52,18 @@ export default function Mint() {
                         }}
                         value={amount}
                         width={"100%"}
-                    />
+                    /> */}
                 </Box>
                 <Button
                     isLoading={loading}
-                    loadingText="Submitting"
+                    loadingText={loadingText}
                     onClick={() => {
+                        onSubmit();
                         setLoading(!loading);
                     }}
+                    disabled
                 >
-                    Submit
+                    {loadingText}
                 </Button>
             </Box>
         </MainComponent>
