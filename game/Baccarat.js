@@ -16,6 +16,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+/*** User chose to start the game ***/
 async function getUserStartGameInput(gameDeck, hash) {
   return new Promise((resolve) => {
     rl.question(
@@ -35,6 +36,51 @@ async function getUserStartGameInput(gameDeck, hash) {
         resolve([true, hash]);
       }
     );
+  });
+}
+
+/*** Get user's betting choice ***/
+async function getBettingChoice() {
+  return new Promise((resolve) => {
+    rl.question(
+      "\nPlease choose to bet on 'Banker or 'Player' or 'Tie': ",
+      (answer) => {
+        answer = answer.toLowerCase();
+        if (answer !== "banker" && answer !== "player" && answer !== "tie") {
+          console.log(
+            "Invalid input. Please select either 'Banker' or 'Player'."
+          );
+          return resolve(getBettingChoice());
+        }
+        resolve(answer);
+      }
+    );
+  });
+}
+
+/*** Get user's betting amount ***/
+async function getBettingAmount(userCredit) {
+  let betting;
+  return new Promise((resolve) => {
+    rl.question("\nPlease choose your betting amount: ", (answer) => {
+      betting = parseFloat(answer);
+      if (isNaN(betting) || betting < 0) {
+        console.log("Invalid betting amount. Please input a valid value.");
+        return resolve(getBettingAmount(userCredit));
+      } else if (betting > userCredit) {
+        console.log("You are betting more than you have.");
+        console.log(`You only have ${userCredit}. Please input a valid value.`);
+        return resolve(getBettingAmount(userCredit));
+      } else if (betting % 2 !== 0) {
+        // Check if betting amount is not even
+        console.log(
+          "Invalid betting amount. The betting amount must be an even number."
+        );
+        return resolve(getBettingAmount(userCredit));
+      } else {
+        resolve(betting);
+      }
+    });
   });
 }
 
@@ -88,102 +134,75 @@ function isNatural(hand) {
 
 /*** Determine player's and banker's move ***/
 async function thirdCardLogic(deck, playersHand, bankersHand) {
-  /* If natural hand, directly calculate winner */
   if (isNatural(playersHand) || isNatural(bankersHand)) {
     await sleep(1000);
     return [playersHand, bankersHand];
   }
 
-  /* Player's movement */
   console.log(`\n<*** Card 3 ***>`);
   await sleep(1000);
+
+  // Player's Movement
   if (calculateHand(playersHand) <= 5) {
-    console.log(`\nDealing 3rd card for Banker...\n`);
+    console.log(`\nDealing 3rd card for Player...\n`);
     playersHand.push(deck.deal());
   } else {
-    console.log(`\nPlayer doesn't need 3rd card...)\n`);
+    console.log(`\nPlayer doesn't need 3rd card...\n`);
   }
   console.log(`\nPlayers Final hand: `);
   printHand(playersHand);
 
-  /* Banker's movement */
-  /* Banker move determined by whether player was dealed extra card */
+  // Banker's Movement
   await sleep(1000);
-  if (playersHand.length <= 2) {
-    /* If player has 2 cards */
-    console.log(`\nPlayers hand: `);
-    printHand(playersHand);
+  let bankersPoints = calculateHand(bankersHand);
 
-    if (calculateHand(bankersHand) <= 5) {
-      console.log(`\nDealing 3rd card for Banker...\n`);
-      bankersHand.push(deck.deal());
-    } else {
-      console.log(`\nBanker doesn't need 3rd card... \n`);
-    }
-  } else {
-    /* If player has 3 cards */
-
-    /* Determine player's third card value */
-    let playersThirdCard;
-    let card = playersHand[2].slice(2);
-    if (card == "A") {
-      playersThirdCard = 1;
-    } else if (["T", "J", "Q", "K"].includes(card)) {
-      playersThirdCard = 0;
-    } else {
-      playersThirdCard = parseInt(card);
-    }
-    if (calculateHand(bankersHand) <= 2) {
-      /* If banker's hand is 2, deal extra card no matter what */
-      console.log(`\nDealing 3rd card for Banker...\n`);
-      bankersHand.push(deck.deal());
-    } else if (calculateHand(bankersHand) == 3) {
-      /* If banker's hand is 3, deal extra card other than the case where player's third card is 8*/
-      if (playersThirdCard != 8) {
-        console.log(`\nDealing 3rd card for Banker...\n`);
-        bankersHand.push(deck.deal());
-      }
-    } else if (calculateHand(bankersHand) == 4) {
-      /* If banker's hand is 4, deal extra card if player's third card is not [0, 1, 8, 9] */
-      let cardsToSkip = [0, 1, 8, 9];
-      if (!cardsToSkip.includes(playersThirdCard)) {
-        console.log(`\nDealing 3rd card for Banker...\n`);
-        bankersHand.push(deck.deal());
-      } else {
-        console.log(`\nBanker doesn't need 3rd card... \n`);
-      }
-    } else if (calculateHand(bankersHand) == 5) {
-      /* If banker's hand is 5, deal extra card if player's third card is not [0, 1, 2, 3, 8, 9] */
-      let playersThirdCard = parseInt(playersHand[2].slice(2));
-      let cardsToSkip = [0, 1, 2, 3, 8, 9];
-      if (!cardsToSkip.includes(playersThirdCard)) {
-        console.log(`\nDealing 3rd card for Banker...\n`);
-        bankersHand.push(deck.deal());
-      } else {
-        console.log(`\nBanker doesn't need 3rd card... \n`);
-      }
-    } else if (calculateHand(bankersHand) == 6) {
-      /* If banker's hand is 6, deal extra card only if player's third card is [6, 7] */
-      let playersThirdCard = parseInt(playersHand[2].slice(2));
-      let cardsToSkip = [0, 1, 2, 3, 4, 5, 8, 9];
-      if (!cardsToSkip.includes(playersThirdCard)) {
-        console.log(`\nDealing 3rd card for Banker...\n`);
-        bankersHand.push(deck.deal());
-      } else {
-        console.log(`\nBanker doesn't need 3rd card... \n`);
-      }
-    } else if (calculateHand(bankersHand) >= 7) {
-      console.log(`\nBanker doesn't need 3rd card... \n`);
-    }
-    console.log(`\nBankers final hand: `);
-    printHand(bankersHand);
-    await sleep(1000);
-    return [playersHand, bankersHand];
+  let playerThirdCardValue;
+  if (playersHand.length === 3) {
+    const thirdCard = playersHand[2].slice(2);
+    playerThirdCardValue = isNaN(parseInt(thirdCard))
+      ? thirdCard === "A"
+        ? 1
+        : 0
+      : parseInt(thirdCard);
   }
 
-  /* Return value based on winner */
-}
+  // The rules for drawing a third card for the banker, depending on banker's points and the player's third card
+  const drawRules = {
+    3: () => playerThirdCardValue !== 8,
+    4: () => ![0, 1, 8, 9].includes(playerThirdCardValue),
+    5: () => ![0, 1, 2, 3, 8, 9].includes(playerThirdCardValue),
+    6: () => [6, 7].includes(playerThirdCardValue),
+  };
 
+  if (playersHand.length === 2) {
+    if (bankersPoints <= 5) {
+      console.log(`\nDealing 3rd card for Banker...\n`);
+      bankersHand.push(deck.deal());
+    } else {
+      console.log(`\nBanker doesn't need 3rd card...\n`);
+    }
+  } else {
+    if (bankersPoints <= 2) {
+      console.log(`\nDealing 3rd card for Banker...\n`);
+      bankersHand.push(deck.deal());
+    } else {
+      // Check the draw rules based on banker's current points
+      const shouldDraw = drawRules[bankersPoints] && drawRules[bankersPoints]();
+      if (shouldDraw) {
+        console.log(`\nDealing 3rd card for Banker...\n`);
+        bankersHand.push(deck.deal());
+      } else {
+        console.log(`\nBanker doesn't need 3rd card...\n`);
+      }
+    }
+  }
+
+  console.log(`\nBankers Final hand: `);
+  printHand(bankersHand);
+  await sleep(1000);
+
+  return [playersHand, bankersHand];
+}
 async function dealCards(gameDeck) {
   console.log(`\nDealing!!\n`);
   let playersHand = [];
@@ -236,11 +255,12 @@ async function baccarat() {
     [startGame, hash] = await getUserStartGameInput(gameDeck, hash);
   }
 
-  /*
+  // User's choice
+  const userChoice = await getBettingChoice();
+  // Get user's betting amount
+  const userBettingAmount = await getBettingAmount();
 
-  */
-
-  // Commencing the game when user agree with the hash
+  // Commencing the game when user agree with the hash and bet
   console.log(`<*** Starting Game ***>`);
 
   // Deal the cards to users based on Baccarat rules
