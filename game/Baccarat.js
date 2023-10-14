@@ -15,6 +15,9 @@ const {
   showBettingResult,
 } = require("./game-functions");
 
+/*** This was meant to be the test logic of the game in the CLI form  ***/
+/*** If implemented using REACT or other frontend frameworks, just import the game functions under ./game-functions.js ***/
+
 /********************/
 /* Helper Functions */
 /********************/
