@@ -4,6 +4,11 @@ struct Hands:
     first as u16;
     second as u16;
 
+struct GameResult:
+    banker as Hands;
+    player as Hands;
+    last_two as Hands;
+
 record CasinoDecks:
     owner as address.private;
     gates as u64.private;
@@ -37,6 +42,11 @@ record game_result:
 mapping casino_balance:
 	key as address.public;
 	value as u64.public;
+
+
+mapping casino_history:
+	key as u128.public;
+	value as GameResult.public;
 
 function fed_printer:
     input r0 as u64.public;
@@ -191,13 +201,19 @@ function play_game:
     ternary r94 r97 r93 into r98;
     cast r1.player 0u64 r98 into r99 as chips.record;
     cast r1.player 0u64 r0.banker r0.player r0.last_two r0.uuid into r100 as game_result.record;
-    async play_game self.caller r98 into r101;    output r99 as chips.record;
+    async play_game self.caller r98 r0.banker r0.player r0.last_two r0.uuid into r101;    output r99 as chips.record;
     output r100 as game_result.record;
     output r101 as zakk.aleo/play_game.future;
 
 finalize play_game:
     input r0 as address.public;
     input r1 as u64.public;
-    get.or_use casino_balance[r0] 0u64 into r2;
-    sub r2 r1 into r3;
-    set r3 into casino_balance[r0];
+    input r2 as Hands.public;
+    input r3 as Hands.public;
+    input r4 as Hands.public;
+    input r5 as u128.public;
+    get.or_use casino_balance[r0] 0u64 into r6;
+    sub r6 r1 into r7;
+    set r7 into casino_balance[r0];
+    cast r2 r3 r4 into r8 as GameResult;
+    set r8 into casino_history[r5];
