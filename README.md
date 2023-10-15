@@ -28,6 +28,9 @@ This ensures the genuineness of the game and the pricavy of user's transaction a
 
 # Get Started
 
+Deployed program id: zakkarrat_hello_world.aleo
+Deployment transaction id: at1ye7awvg5u8pu0twlxskt2q06zye9j8dzu5zsw5kac7u6wq5jus8sxw8wfv
+
 ## Requirement
 
 - @aleo/sdk: 0.6.2
