@@ -16,15 +16,34 @@ export default function Mint() {
     const [address, setAddress] = React.useState("");
     const [loadingText, setLoadingText] = React.useState("Submit");
     const { mintTxn, setMintTxn } = useMainDataContext();
+    const [submitTime, setSubmitTime] = React.useState(false);
     const toast = useToast();
 
     async function onSubmit() {
-        setLoading(true);
         const result = (await mint(address))?.toString();
         if (result) result.length > 0 ? setLoadingText("Success") : setLoadingText("Failed");
-        setLoading(false);
+
         return result;
     }
+
+    React.useEffect(() => {
+        if (!loading) return;
+        let timer1 = setTimeout(() => {
+            setSubmitTime(true);
+        }, 1000);
+        return () => {
+            clearTimeout(timer1);
+        };
+    }, [loading]);
+
+    React.useEffect(() => {
+        if (!submitTime) return;
+
+        let txn = Promise.resolve(onSubmit());
+        txn.then((val) => setMintTxn(val));
+        setSubmitTime(false);
+        setLoading(false);
+    }, [submitTime]);
     return (
         <MainComponent>
             <Box
@@ -72,11 +91,8 @@ export default function Mint() {
                             });
                             return;
                         }
-                        let txn = await onSubmit();
-                        if (txn) {
-                            setMintTxn(txn);
-                        }
-                        setLoading(!loading);
+                        setLoadingText("Loading");
+                        setLoading(true);
                         if (loadingText === "Success") {
                             toast({
                                 title: "Transaction Successful.",
