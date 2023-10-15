@@ -103,8 +103,8 @@ Developing on Aleo is a total new experience for us, as Aleo's Blockchain utiliz
 
 ### 3. Bugs in Aleo-SDK
 
-- We have encountered bugs during the usage of Aleo-SDK, and we have managed to dive into the node_module, find the bug and fix it. Examples of sdk usages were not up to date, there were some depencies problems within the sdk. [PR #774](https://github.com/AleoHQ/sdk/pull/774)
+- We have encountered bugs during the usage of Aleo-SDK, and we have managed to dive into the node_module, find the bug and fix it. Examples of sdk usages were not up to date, there were some dependencies problems within the sdk. [PR #774](https://github.com/AleoHQ/sdk/pull/774)
 
 ### 4. Aleo Testnet3 Under Recalibration During Hackathon Period
 
-- The testnet was under recalibration and cause our aleo programme not being able to deploy. We uses older version of SnarkOS to run a local Beacon node to test the deployment of our programmes.
+- The testnet was under recalibration and causes our aleo programme not being able to deploy. We uses older version of SnarkOS to run a local Beacon node to test the deployment of our programmes.
