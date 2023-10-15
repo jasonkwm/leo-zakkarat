@@ -1,4 +1,4 @@
-program zakk.aleo;
+program zakkarrat_hello_world.aleo;
 
 struct Hands:
     first as u16;
@@ -38,11 +38,9 @@ record game_result:
     last_two as Hands.private;
     uuid as u128.private;
 
-
 mapping casino_balance:
 	key as address.public;
 	value as u64.public;
-
 
 mapping casino_history:
 	key as u128.public;
@@ -51,7 +49,7 @@ mapping casino_history:
 function fed_printer:
     input r0 as u64.public;
     assert.eq self.caller aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg;
-    async fed_printer self.caller r0 into r1;    output r1 as zakk.aleo/fed_printer.future;
+    async fed_printer self.caller r0 into r1;    output r1 as zakkarrat_hello_world.aleo/fed_printer.future;
 
 finalize fed_printer:
     input r0 as address.public;
@@ -89,7 +87,7 @@ function make_bet:
     cast aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg self.caller 0u64 r1 r3 r2 into r6 as bet.record;
     async make_bet aleo1zmlpajf4fgvwcr4kcwq48j8xvcshcmwg8kaf3py96qt4atlajcfqrre0dg r2 into r7;    output r5 as chips.record;
     output r6 as bet.record;
-    output r7 as zakk.aleo/make_bet.future;
+    output r7 as zakkarrat_hello_world.aleo/make_bet.future;
 
 finalize make_bet:
     input r0 as address.public;
@@ -203,7 +201,7 @@ function play_game:
     cast r1.player 0u64 r0.banker r0.player r0.last_two r0.uuid into r100 as game_result.record;
     async play_game self.caller r98 r0.banker r0.player r0.last_two r0.uuid into r101;    output r99 as chips.record;
     output r100 as game_result.record;
-    output r101 as zakk.aleo/play_game.future;
+    output r101 as zakkarrat_hello_world.aleo/play_game.future;
 
 finalize play_game:
     input r0 as address.public;

@@ -1,5 +1,5 @@
 // The 'leo' program.
-program zakk.aleo {
+program zakkarrat_hello_world.aleo {
     mapping casino_balance: address => u64;
 
     mapping casino_history: u128 => GameResult;
