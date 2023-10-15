@@ -5,6 +5,7 @@ import Link from "next/link";
 const pages = [
     { link: "/", name: "Home" },
     { link: "/mint", name: "Mint" },
+    { link: "/history", name: "History" },
     { link: "/init", name: "Init" },
     { link: "/casino", name: "Casino" },
 ];
@@ -36,7 +37,7 @@ export default function MainComponent({ children }: { children: React.ReactNode 
                     </Link>
                 ))}
             </Box>
-            <Box mt={"60px"}>{children}</Box>
+            <Box mt={"80px"}>{children}</Box>
         </>
     );
 }
