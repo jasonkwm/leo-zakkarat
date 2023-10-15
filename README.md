@@ -1,25 +1,107 @@
-# leo-zakkarat
-Baccarat in Aleo
+# ETHKL2023 Hackathon - Aleo track
 
+Proof of concept fully-verifiable, privacy centric zero-knowledge Baccarat Game on Aleo.
 
-# To deploy
+## Problem Statement
 
-- Create a record that you will consume to deploy the programme
-```sh
-snarkos developer execute --private-key "{PRIVATE_KEY}" --query "https://api.explorer.aleo.org/v1" "credits.aleo" "transfer_public_to_private" "{WALLET_ADDRESS}" "10000000u64" --broadcast "https://vm.aleo.org/api/testnet3/transaction/broadcast"
-```
+### 1. Genuineness and trustworthiness of online casinos in question
 
-- Use the tx_id from the output to view the cyphertext, decrypt it using aleo.tools -> record and your private key
+There are an abundance of online gaming sites available in the market, be it legal or illegal ones. Right now, there is no way we could ensure that these gaming sites generate the games fairly and do not tamper with the game probability to increase the house edge.
+
+Let us use Baccarat as an example - the expected return for every $1 a user betting on "Player" is $0.9874, which means that casino has a house edge of $0.0126 for every $1 a user bet. However should a casino decided to tweak the game generation algorithim to decrease user's winning expected return to $0.9700, it could go unnoticed by the user, but will increase the casino's long term profit on the game by more than 100%.
+
+### 2. Privacy of user's on-chain betting
+
+Most modern smart contract enabled blockchains utilizes a transparent account based model, and this makes users betting and other transaction on chain fully visible to anyone. This causes privacy concerns and potentially create legal risks for the user under certain jurisfiction.
+
+## Solution:
+
+We are building a fully-verifiable, privacy-centric zero-knowledge baccarat game on Aleo, that can ensures the genuineness of the game hands by storing the game hash on chain, and resolves the game result via zero-knowledge execution. Under Aleo's design, all transactions were essentially ciphered, and only the owner with the private key / view key of the record can view it.
+This ensures the genuineness of the game and the pricavy of user's transaction at the same time.
+
+## Resources
+
+- Official Aleo [Documentation](https://developer.aleo.org/getting_started/)
+- [Aleo Explorer](https://explorer.aleo.org/)
+- A tools for you to decypher record, transfer and etc. [Aleo.tools](https://aleo.tools)
+- @aleohq/sdk [documentation](https://github.com/AleoHQ/sdk/tree/testnet3/sdk)
+
+# Get Started
+
+## Requirement
+
+- @aleo/sdk: 0.6.2
+- snarkos cli: 2.1.7
+- Next.js: 13.5.4
+
+## To run frontend
+
+1. cd into frontend
 
 ```bash
-WALLETADDRESS="{YOUR WALLET ADDRESS}"
-PRIVATEKEY="{YOUR PRIVATE KEY}"
-
-APPNAME="{YOUR_APP_NAME}"
-
-RECORD="{
- DECRPYTED RECORD HERE, P.S DONT REMOVE SUFFIXES
-}"
-
-cd .. && snarkos developer deploy "${APPNAME}.aleo" --private-key "${PRIVATEKEY}" --query "https://api.explorer.aleo.org/v1" --path "./${APPNAME}/build/" --broadcast "https://vm.aleo.org/api/testnet3/transaction/broadcast" --fee 1000000 --record "${RECORD}"
+cd frontend
 ```
+
+2. Install depencies
+
+```bash
+yarn install
+```
+
+3. Start dev
+
+```bash
+yarn dev
+```
+
+## To deploy zakkarat program
+
+Note: You will need to do a `transfer_public_to_private` in order to get a private fee record for the deployment fee requiremnent.
+
+1. Checkout branch (game) and cd into leo/
+
+```bash
+git checkout game
+cd leo
+```
+
+2. Deploy using snarkos cli
+
+```bash
+PRIVATE_KEY=""
+ENDPOINT="https://vm.aleo.org/api"
+BROADCAST="https://vm.aleo.org/api/testnet3/transaction/broadcast"
+FEE_AMOUNT="9000000"
+FEE_RECORD=""
+
+snarkos developer deploy zakkarrat_hello_world.aleo \
+    --private-key ${PRIVATE_KEY} \
+    --query ${ENDPOINT} \
+    --fee ${FEE_AMOUNT} \
+    --record "${FEE_RECORD}" \
+    --store "./deploy/deploy" \
+    --path "./build/" \
+    --broadcast ${BROADCAST} \
+    # --dry-run
+
+```
+
+---
+
+Developing on Aleo is a total new experience for us, as Aleo's Blockchain utilizes UTXO mode which is very much different from Ethereum's Account-based model.
+
+### 1. Leo programming language
+
+- Leo is a functional programming language, due to how underlying ZK-Circuits work, Leo doesn't officially support strings and arrays as data types. This makes us to be more creative in designing our programme.
+
+### 2. Not able to share state between different programs
+
+- Due to the privacy centric nature of the network, different programs where not able to share states.
+
+### 3. Bugs in Aleo-SDK
+
+- We have encountered bugs during the usage of Aleo-SDK, and we have managed to dive into the node_module, find the bug and fix it. Examples of sdk usages were not up to date, there were some depencies problems within the sdk.
+
+### 4. Aleo Testnet3 Under Recalibration During Hackathon Period
+
+- The testnet was under recalibration and cause our aleo programme not being able to deploy. We uses older version of SnarkOS to run a local Beacon node to test the deployment of our programmes.
