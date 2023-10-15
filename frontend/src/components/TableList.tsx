@@ -11,6 +11,8 @@ export default function TableList() {
                 textAlign={"center"}
                 borderRadius={"4px"}
                 paddingY={"12px"}
+                as={"h3"}
+                size={"md"}
             >
                 Select Your Table Number: {selectedTable}
             </Heading>
