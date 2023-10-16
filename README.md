@@ -108,3 +108,15 @@ Developing on Aleo is a total new experience for us, as Aleo's Blockchain utiliz
 ### 4. Aleo Testnet3 Under Recalibration During Hackathon Period
 
 - The testnet was under recalibration and causes our aleo programme not being able to deploy. We uses older version of SnarkOS to run a local Beacon node to test the deployment of our programmes.
+
+## Contributors 
+[<img src="https://github.com/hiromasa0629.png" width="60px;" display="inline;"/>](https://github.com/hiromasa0629) &emsp;&emsp;
+[<img src="https://github.com/bunyod16.png" width="60px;"/>](https://github.com/bunyod16) &emsp;&emsp;
+[<img src="https://github.com/alvinyap510.png" width="60px;"/>](https://github.com/alvinyap510) &emsp;&emsp;
+[<img src="https://github.com/jasonkwm.png" width="60px;"/>](https://github.com/jasonkwm) &emsp;&emsp;
+
+
+<a href="https://github.com/hiromasa0629">Hiromasa</a> &emsp;&emsp;
+<a href="https://github.com/bunyod16">Bunyod</a> &emsp;&emsp;
+<a href="https://github.com/alvinyap510">Alvin Yap</a> &emsp;&emsp;
+<a href="https://github.com/jasonkwm">Jason Koh</a> &emsp;
